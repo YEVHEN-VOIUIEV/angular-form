@@ -1,0 +1,5 @@
+<div class="errors-wrapper">
+  <p *ngIf="field?.touched && field?.invalid" class="error-message">
+    {{ getErrorMessages() }}
+  </p>
+</div>

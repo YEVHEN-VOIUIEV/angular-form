@@ -1,0 +1,15 @@
+
+:host {
+  .errors-wrapper {
+    min-height: 20px;
+
+    .error-message {
+      margin-top: .25rem !important;
+      font-size: 80%;
+      color: red;
+      opacity: 1;
+      min-height: 15px;
+      margin: 0 0 2px 0;
+    }
+  }
+}

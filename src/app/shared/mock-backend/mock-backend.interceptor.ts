@@ -11,7 +11,7 @@ export class MockBackendInterceptor implements HttpInterceptor {
       return this.handleCheckUsername(req);
     }
     if (req.url.endsWith('/api/submitForm') && req.method === 'POST') {
-      return this.handleSubmitForm();
+      return this.handleSubmitForm(req);
     }
 
     return of(new HttpResponse({ status: 404, body: { result: 'You are using the wrong endpoint'} }));
@@ -27,12 +27,12 @@ export class MockBackendInterceptor implements HttpInterceptor {
     );
   }
 
-  private handleSubmitForm(): Observable<HttpResponse<SubmitFormResponseData>> {
+  private handleSubmitForm(req: HttpRequest<any>): Observable<HttpResponse<SubmitFormResponseData>> {
     const response = new HttpResponse({ status: 200, body: { result: 'nice job' } });
 
     return of(response).pipe(
       delay(500),
-      tap(() => console.log('submitForm response'))
+      tap(() => console.log('submitForm response', req.body))
     );
   }
 }

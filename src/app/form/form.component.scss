@@ -1,0 +1,95 @@
+$size: 300px;
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.panel {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .status {
+        color: red;
+    }
+}
+
+.users {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    width: 90vw;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 10px;
+}
+
+.card {
+    height: $size;
+    width: $size;
+
+    &-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+    }
+}
+
+.delete-button {
+    border: none;
+    background: none;
+
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.add-button {
+    height: $size;
+    width: $size;
+
+    border-radius: 6px;
+    border: 1px dashed rgba(0, 0, 0, 0.176);
+
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.176), #ffffff 100%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+        height: 70px;
+        width: 70px;
+        color: rgb(13, 110, 253);
+        border-radius: 50%;
+        border: 1px dashed rgb(13, 110, 253);
+        font-size: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.form-control {
+    .is-invalid {
+      border-color: red;
+    }
+}
+
+.list-group {
+    position: absolute;
+    max-width: 150px;
+    overflow-y: auto;
+}
+
+.list-group-item:hover {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}

@@ -1,0 +1,70 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="panel" *ngIf="userList.controls.length">
+        <ng-container *ngIf="!isSubmit">
+            <button [disabled]="form.status !== 'VALID'" class="btn btn-primary" type="button" (click)="startSubmit()">Submit all forms</button>
+            <div *ngIf="form.status === 'INVALID'" class="status">Invalid forms <span>{{ invalidCount }}</span></div>
+        </ng-container>
+        <ng-container *ngIf="isSubmit">
+            <button class="btn btn-danger" type="button" (click)="cancelSubmit()">Cancel</button>
+            <div class="timer">{{ timer }}</div>
+        </ng-container>
+    </div>
+
+    <ul class="users" formArrayName="users">
+        <li *ngFor="let user of userList.controls; let i = index">
+            <div [formGroupName]="i" class="card" >
+                <div class="card-body">
+                    <button type="button" class="delete-button" (click)="deleteUser(i)">x</button>
+
+                    <div class="form-group">
+                        <label for="{{'country_' + i}}">Country</label>
+                        <input 
+                            tooltip
+                            [tooltipControl]="user.get('country')"
+                            id="{{'country_' + i}}" 
+                            class="form-control" 
+                            formControlName="country"
+                            (input)="onSearch(user.get('country'), i)"
+                            [attr.aria-expanded]="suggestions[i]?.length ? 'true' : 'false'">
+                        <ul *ngIf="suggestions[i]?.length" class="list-group mt-1">
+                            <li 
+                                class="list-group-item" 
+                                *ngFor="let suggestion of suggestions[i]" 
+                                (click)="selectSuggestion(user.get('country'), suggestion, i)">
+                                {{ suggestion }}
+                            </li>
+                        </ul>
+                        <app-errors [field]="user.get('country')"></app-errors>
+                    </div>
+                    <div class="form-group">
+                        <label for="{{'name_' + i}}">Username</label>
+                        <input tooltip [tooltipControl]="user.get('name')" id="{{'name_' + i}}" class="form-control" formControlName="name">
+                        <app-errors [field]="user.get('name')"></app-errors>
+                    </div>
+                    <div class="form-group">
+                        <label for="{{'birthday_' + i}}">Birthday</label>
+                        <div class="input-group">
+                            <input 
+                                tooltip
+                                [tooltipControl]="user.get('birthday')"
+                                id="{{'birthday_' + i}}"  
+                                class="form-control" 
+                                formControlName="birthday" 
+                                placeholder="dd.mm.yyyy" 
+                                ngbDatepicker 
+                                [maxDate]="maxDate"
+                                #dp="ngbDatepicker"/>
+                            <button class="btn btn-outline-secondary" (click)="dp.toggle()" type="button">
+                                &#x274F;
+                            </button>
+				        </div>
+                        <app-errors [field]="user.get('birthday')"></app-errors>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li *ngIf="isAvailableToAddUser && !isSubmit">
+            <button type="button" class="add-button" (click)="addUser()"><p>+</p></button>
+        </li>
+    </ul>
+</form>
